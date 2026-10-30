@@ -1,0 +1,223 @@
+.contact {
+  position: relative;
+  overflow: hidden;
+  padding: var(--section-pad) var(--gutter) clamp(80px, 10vw, 140px);
+  background: var(--paper);
+  color: var(--text);
+  font-family: var(--font-body);
+}
+
+/* A slow-breathing pool of wine light behind the section. */
+.contact__glow {
+  position: absolute;
+  left: 50%;
+  top: 55%;
+  width: min(1100px, 120vw);
+  height: min(1100px, 120vw);
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(184, 52, 77, 0.32) 0%, rgba(184, 52, 77, 0.08) 40%, transparent 65%);
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  animation: contact-breathe 9s ease-in-out infinite;
+}
+
+@keyframes contact-breathe {
+  50% {
+    transform: translate(-50%, -50%) scale(1.08);
+    opacity: 0.8;
+  }
+}
+
+.contact__inner {
+  position: relative;
+  max-width: var(--max);
+  margin: 0 auto;
+}
+
+.contact__grid {
+  display: grid;
+  grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+  gap: clamp(32px, 6vw, 96px);
+  align-items: center;
+}
+
+.contact__model {
+  margin: 0;
+}
+
+.contact__frame {
+  padding: 10px;
+  border: 1px solid var(--line-strong);
+  border-radius: 20px;
+  background: linear-gradient(160deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0.01));
+  box-shadow: 0 40px 120px -30px rgba(184, 52, 77, 0.5);
+}
+
+.contact__viewport {
+  height: clamp(420px, 60vh, 540px);
+  border-radius: 12px;
+}
+
+/* ---- panel ---- */
+
+.contact__panel {
+  padding: clamp(28px, 4vw, 48px);
+  border: 1px solid var(--line-strong);
+  border-radius: 28px;
+  background: linear-gradient(160deg, rgba(255, 255, 255, 0.07), rgba(255, 255, 255, 0.015)), rgba(12, 10, 11, 0.6);
+}
+
+.contact__kicker {
+  display: block;
+  margin-bottom: 14px;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--text-3);
+}
+
+.contact__email {
+  display: inline-block;
+  margin-bottom: 32px;
+  font-family: var(--font-display);
+  /* Sized to keep the address on one line inside the panel. */
+  font-size: clamp(20px, 2.5vw, 38px);
+  font-weight: 700;
+  line-height: 1.05;
+  letter-spacing: -0.04em;
+  text-decoration: none;
+  white-space: nowrap;
+  background: var(--gradient);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  padding-bottom: 6px;
+  transition: filter 300ms ease;
+}
+
+.contact__email:hover {
+  filter: brightness(1.15);
+}
+
+.contact__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 36px;
+}
+
+.contact__channels {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+  margin: 0 0 28px;
+  padding: 0;
+  list-style: none;
+}
+
+.contact__channel {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 18px 18px;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  text-decoration: none;
+  color: var(--text);
+  transition: border-color 300ms ease;
+}
+
+.contact__channel:hover,
+.contact__channel:focus-visible {
+  border-color: rgba(255, 125, 147, 0.4);
+  outline: none;
+}
+
+.contact__channel-icon {
+  flex: none;
+  width: 20px;
+  height: 20px;
+  color: var(--accent);
+}
+
+.contact__channel span {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.contact__channel small {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 400;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--text-3);
+}
+
+.contact__channel-arrow {
+  flex: none;
+  width: 18px;
+  height: 18px;
+  color: var(--text-3);
+  transition:
+    transform 300ms var(--ease-out),
+    color 300ms ease;
+}
+
+.contact__channel:hover .contact__channel-arrow {
+  color: var(--accent);
+  transform: translateX(4px);
+}
+
+.contact__status {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 0;
+  font-size: 13px;
+  color: var(--text-3);
+}
+
+.contact__status i {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #5fe08a;
+  box-shadow: 0 0 12px #5fe08a;
+}
+
+@media (max-width: 960px) {
+  .contact__email {
+    font-size: clamp(18px, 5.6vw, 34px);
+  }
+
+  .contact__grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .contact__model {
+    max-width: 420px;
+  }
+}
+
+@media (max-width: 560px) {
+  .contact__channels {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .contact__glow {
+    animation: none;
+  }
+
+  .contact__channel-arrow {
+    transition: none;
+  }
+}

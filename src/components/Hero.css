@@ -1,0 +1,672 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,600;0,700;0,900;1,600&display=swap');
+
+.hero {
+  --ink: #2c1c20;
+  --ink-dim: #783d48;
+  
+  --hero-pad-top: clamp(8px, 1vh, 14px);
+  --hero-pad-bottom: clamp(6px, 0.8vh, 12px);
+  --stage-height: min(
+    calc(100svh - var(--hero-pad-top) - var(--hero-pad-bottom)),
+    94vw
+  );
+
+  --sprite-mask-x: linear-gradient(
+    to right,
+    transparent 0%,
+    rgba(0, 0, 0, 0.6) 2%,
+    #000000 8%,
+    #000000 92%,
+    rgba(0, 0, 0, 0.6) 98%,
+    transparent 100%
+  );
+  --sprite-mask-y: linear-gradient(
+    to bottom,
+    transparent 0%,
+    #000000 2%,
+    #000000 98%,
+    transparent 100%
+  );
+
+  position: relative;
+  isolation: isolate;
+  min-height: 100svh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: var(--hero-pad-top) 32px var(--hero-pad-bottom);
+  box-sizing: border-box;
+  overflow: hidden;
+  text-align: center;
+  color: var(--ink);
+  font-family: 'Outfit', system-ui, sans-serif;
+  cursor: none;
+}
+
+/* Cinematic Interactive Spotlight Follower */
+.hero__spotlight {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background: radial-gradient(
+    650px circle at var(--cursor-x, 50%) var(--cursor-y, 50%),
+    rgba(178, 63, 84, 0.08) 0%,
+    rgba(255, 255, 255, 0) 70%
+  );
+  transition: opacity 0.3s ease;
+}
+
+/* Custom Interactive Luminous Cursor */
+.hero__cursor {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 28px;
+  height: 28px;
+  margin-left: -14px;
+  margin-top: -14px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(178, 63, 84,1) 0%, rgba(215, 86, 109,0.5) 65%, transparent 100%);
+  box-shadow: 0 0 25px rgba(178, 63, 84, 0.7), 0 0 50px rgba(255, 255, 255, 0.9);
+  pointer-events: none;
+  z-index: 9999;
+  transition: transform 0.03s cubic-bezier(0.17, 0.67, 0.83, 0.67);
+  will-change: transform;
+}
+
+@media (pointer: coarse) {
+  .hero__cursor, .hero__spotlight {
+    display: none;
+  }
+  .hero {
+    cursor: default;
+  }
+}
+
+/* Light studio: edges match the video's cool white (#f2f6f7) so the sprite mask blends in */
+.hero__backdrop {
+  position: absolute;
+  inset: 0;
+  z-index: -3;
+  pointer-events: none;
+  background:
+    radial-gradient(
+      circle at 50% 35%,
+      #ffffff 0%,
+      #f7f9fa 32%,
+      #f2f6f7 62%,
+      #eaeef2 100%
+    );
+}
+
+/* Floating Cinematic Dust / Atmospheric Particles */
+.hero__particles {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.hero__particles span {
+  position: absolute;
+  display: block;
+  width: 6px;
+  height: 6px;
+  background: rgba(178, 63, 84, 0.25);
+  box-shadow: 0 0 10px rgba(178, 63, 84, 0.5);
+  border-radius: 50%;
+  animation: float-particle 10s infinite linear;
+  bottom: -20px;
+}
+
+.hero__particles span:nth-child(1) { left: 15%; animation-duration: 12s; animation-delay: 0s; }
+.hero__particles span:nth-child(2) { left: 35%; animation-duration: 15s; animation-delay: 2s; width: 4px; height: 4px; }
+.hero__particles span:nth-child(3) { left: 60%; animation-duration: 9s; animation-delay: 4s; width: 8px; height: 8px; }
+.hero__particles span:nth-child(4) { left: 80%; animation-duration: 14s; animation-delay: 1s; }
+.hero__particles span:nth-child(5) { left: 90%; animation-duration: 11s; animation-delay: 3s; width: 5px; height: 5px; }
+
+@keyframes float-particle {
+  0% {
+    transform: translateY(0) translateX(0) scale(1);
+    opacity: 0;
+  }
+  20% {
+    opacity: 0.8;
+  }
+  80% {
+    opacity: 0.8;
+  }
+  100% {
+    transform: translateY(-105svh) translateX(40px) scale(0.3);
+    opacity: 0;
+  }
+}
+
+/* Soft radiant glow behind him */
+.hero__glow {
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+  pointer-events: none;
+  background:
+    radial-gradient(
+      50% 60% at 50% 38%,
+      rgba(255, 255, 255, 1) 0%,
+      rgba(246, 249, 250, 0.85) 50%,
+      transparent 100%
+    );
+}
+
+.hero__glow::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  bottom: clamp(15px, 4vh, 50px);
+  width: min(65%, 820px);
+  height: 45px;
+  transform: translateX(-50%);
+  border-radius: 50%;
+  background: radial-gradient(
+    50% 50% at 50% 50%,
+    rgba(178, 63, 84, 0.18) 0%,
+    transparent 80%
+  );
+  filter: blur(8px);
+}
+
+.hero__stage {
+  position: relative;
+  height: var(--stage-height);
+  width: min(100%, calc(var(--stage-height) * var(--frame-ratio, 1.778)));
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  overflow: hidden;
+  cursor: none;
+  -webkit-tap-highlight-color: transparent;
+  -webkit-mask-image: var(--sprite-mask-y);
+  mask-image: var(--sprite-mask-y);
+}
+
+.hero__stage:focus-visible {
+  outline: 2px solid rgba(178, 63, 84, 0.7);
+  outline-offset: 8px;
+  border-radius: 12px;
+}
+
+/*
+ * Deliberately no filter here. The idle loop repaints this layer 24 times a
+ * second, and a drop-shadow makes the browser recompute the alpha silhouette of
+ * a masked ~1376x884 layer on every one of those repaints — that, plus the
+ * sheet swap, is what made the hero blink. Grounding comes from the static
+ * contact shadow on .hero__glow::after instead.
+ *
+ * Entrance is opacity only; transform is reserved for the cursor parallax
+ * written from JS, so the two never fight over the same property.
+ */
+.hero__sprite {
+  position: absolute;
+  inset: 0;
+  background-repeat: no-repeat;
+  opacity: 0;
+  transition:
+    opacity 900ms cubic-bezier(0.16, 1, 0.3, 1),
+    transform 600ms cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: background-position, transform;
+  transform: translate3d(0, 0, 0);
+  -webkit-mask-image: var(--sprite-mask-x);
+  mask-image: var(--sprite-mask-x);
+}
+
+.hero[data-state='ready'] .hero__sprite {
+  opacity: 1;
+}
+
+/*
+ * Dissolve layer for cuts between reactions: Hero.tsx copies the outgoing
+ * frame here at full opacity and lets it fade over the new one, so a jump
+ * from the wave to a side glance never pops (and never rewinds).
+ */
+.hero__ghost,
+.hero[data-state='ready'] .hero__ghost {
+  opacity: 0;
+  pointer-events: none;
+  background-image: none;
+  transition: opacity 260ms ease-out;
+  will-change: opacity;
+}
+
+/* ---- blockbuster choreography ---- */
+
+/* The room lights come up before he resolves. */
+.hero__backdrop,
+.hero__glow {
+  animation: hero-lights-up 1600ms cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.hero__glow {
+  animation-delay: 160ms;
+}
+
+@keyframes hero-lights-up {
+  from {
+    opacity: 0;
+    transform: scale(1.08);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.hero__particles {
+  animation: hero-fade-in 2200ms ease 700ms both;
+}
+
+@keyframes hero-fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* The glow breathes while he works, and blooms when he notices you. */
+.hero[data-state='ready'] .hero__glow {
+  animation:
+    hero-lights-up 1600ms cubic-bezier(0.16, 1, 0.3, 1) 160ms both,
+    hero-breathe 7s ease-in-out 1800ms infinite;
+}
+
+@keyframes hero-breathe {
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.035);
+    opacity: 0.92;
+  }
+}
+
+.hero[data-beat='notice'] .hero__glow,
+.hero[data-beat='wave'] .hero__glow {
+  animation: hero-bloom 1200ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes hero-bloom {
+  0% {
+    transform: scale(0.96);
+    opacity: 0.75;
+  }
+  40% {
+    transform: scale(1.07);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+/* A side turn nudges the light toward the side he is facing. */
+.hero__glow {
+  transition: transform 900ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.hero[data-zone='left'] .hero__spotlight {
+  opacity: 0.85;
+}
+
+.hero[data-zone='right'] .hero__spotlight {
+  opacity: 0.85;
+}
+
+/* Side Notes Layout with Cinematic Entrance */
+.hero__note {
+  position: absolute;
+  z-index: 2;
+  text-align: left;
+  pointer-events: none;
+}
+
+/*
+ * Anchored high on purpose. Up here his head and shoulders sit inside the
+ * middle third of the frame, so a large name fits without running into him;
+ * lower down, his arms and the laptop spread wider.
+ */
+.hero__note--left {
+  top: clamp(92px, 12vh, 128px);
+  left: clamp(24px, 3vw, 44px);
+  width: clamp(260px, 28vw, 420px);
+  animation: hero-note-in 1.2s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.hero__note--right {
+  top: 50%;
+  right: clamp(30px, 4vw, 64px);
+  width: clamp(200px, 18vw, 260px);
+  transform: translateY(-50%);
+  text-align: right;
+  animation: hero-note-in-right 1.2s cubic-bezier(0.16, 1, 0.3, 1) 0.2s both;
+}
+
+@keyframes hero-note-in {
+  from {
+    opacity: 0;
+    transform: translateY(26px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes hero-note-in-right {
+  from {
+    opacity: 0;
+    transform: translateY(calc(-50% + 26px));
+  }
+  to {
+    opacity: 1;
+    transform: translateY(-50%);
+  }
+}
+
+/* High-End Editorial Typography */
+.hero__signature-box {
+  margin-bottom: 20px;
+}
+
+.hero__title {
+  margin: 0;
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: clamp(42px, 5.6vw, 82px);
+  font-weight: 900;
+  line-height: 0.98;
+  letter-spacing: -0.03em;
+  color: #2c1c20;
+  text-shadow: 0 2px 20px rgba(178, 63, 84, 0.12);
+  animation: hero-rise-in 1100ms cubic-bezier(0.16, 1, 0.3, 1) 300ms both;
+}
+
+/* The surname catches a slow light sweep, like foil on a title card. */
+.hero__title span {
+  font-style: italic;
+  font-weight: 700;
+  background: linear-gradient(
+    100deg,
+    #b23f54 0%,
+    #b23f54 38%,
+    #e28596 48%,
+    #ffffff 52%,
+    #e28596 56%,
+    #b23f54 66%,
+    #b23f54 100%
+  );
+  background-size: 300% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: hero-sheen 6.5s ease-in-out 2s infinite;
+}
+
+@keyframes hero-sheen {
+  0%,
+  55%,
+  100% {
+    background-position: 130% 0;
+  }
+  85% {
+    background-position: -30% 0;
+  }
+}
+
+.hero__subtitle {
+  margin: 14px 0 0;
+  font-size: clamp(12px, 1.05vw, 16px);
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: #8a3a49;
+  animation: hero-rise-in 1100ms cubic-bezier(0.16, 1, 0.3, 1) 520ms both;
+}
+
+@keyframes hero-rise-in {
+  from {
+    opacity: 0;
+    transform: translateY(26px);
+    filter: blur(8px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+    filter: blur(0);
+  }
+}
+
+/* Ultra-Glassmorphic Chat Bubbles */
+.hero__slot {
+  position: relative;
+  min-height: 4em;
+}
+
+.hero__bubble {
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.8);
+  outline: 1px solid rgba(178, 63, 84, 0.22);
+  padding: 14px 22px;
+  border-radius: 16px;
+  border-bottom-left-radius: 4px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #2c1c20;
+  box-shadow: 0 15px 35px rgba(125, 30, 47, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.9);
+  /* Capped so a bubble never reaches across into his waving hand. */
+  box-sizing: border-box;
+  max-width: 190px;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(14px) scale(0.94);
+  /* Overshooting curve gives the bubbles a spring rather than a fade. */
+  transition:
+    opacity 420ms cubic-bezier(0.34, 1.56, 0.64, 1),
+    visibility 420ms ease,
+    transform 520ms cubic-bezier(0.34, 1.56, 0.64, 1);
+  white-space: normal;
+  line-height: 1.35;
+}
+
+.hero__note--right .hero__bubble {
+  left: auto;
+  right: 0;
+  border-bottom-left-radius: 16px;
+  border-bottom-right-radius: 4px;
+}
+
+.hero[data-zone='away'] .hero__bubble[data-when='away'],
+.hero[data-zone='left'] .hero__bubble[data-when='left'],
+.hero[data-zone='right'] .hero__bubble[data-when='right'],
+.hero[data-beat='notice'] .hero__bubble[data-when='notice'],
+.hero[data-beat='wave'] .hero__bubble[data-when='wave'] {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0) scale(1);
+}
+
+.hero[data-beat='wave'] .hero__bubble[data-when='wave'] {
+  background: linear-gradient(135deg, #c93d57 0%, #b23f54 100%);
+  color: #ffffff;
+  border-color: rgba(255, 255, 255, 0.3);
+  outline: none;
+  box-shadow: 0 15px 40px rgba(178, 63, 84, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.3);
+}
+
+.hero__pointer {
+  flex: none;
+  width: 14px;
+  height: 18px;
+  fill: #783d48;
+  animation: hero-pointer-nudge 2.2s ease-in-out infinite;
+}
+
+@keyframes hero-pointer-nudge {
+  0%, 100% {
+    transform: translate(0, 0);
+    opacity: 0.6;
+  }
+  50% {
+    transform: translate(8px, -4px);
+    opacity: 1;
+  }
+}
+
+/* Blockbuster Animated Call-to-Action Scroll Link */
+.hero__scroll {
+  position: absolute;
+  left: 50%;
+  bottom: clamp(16px, 2.5vh, 28px);
+  transform: translateX(-50%);
+  z-index: 2;
+  display: inline-flex;
+  align-items: center;
+  white-space: nowrap;
+  font-family: 'Outfit', sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: #ffffff;
+  background: linear-gradient(135deg, #c93d57 0%, #b23f54 100%);
+  padding: 12px 26px;
+  border-radius: 30px;
+  box-shadow: 0 10px 30px rgba(178, 63, 84, 0.4);
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity 500ms ease, visibility 500ms ease, transform 300ms cubic-bezier(0.16, 1, 0.3, 1), box-shadow 300ms ease;
+}
+
+.hero[data-beat='point'] .hero__scroll {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  animation:
+    hero-scroll-in 620ms cubic-bezier(0.34, 1.56, 0.64, 1) both,
+    hero-scroll-pulse 2.2s 620ms infinite ease-in-out;
+}
+
+/* Arrow keeps bouncing toward the content his gesture is pointing at. */
+.hero__scroll::after {
+  content: '↓';
+  margin-left: 10px;
+  display: inline-block;
+  animation: hero-arrow-bounce 1.6s ease-in-out infinite;
+}
+
+@keyframes hero-scroll-in {
+  from {
+    opacity: 0;
+    transform: translateX(-50%) translateY(22px) scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0) scale(1);
+  }
+}
+
+@keyframes hero-arrow-bounce {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(4px);
+  }
+}
+
+.hero__scroll:hover {
+  background: linear-gradient(135deg, #392328 0%, #2c1c20 100%);
+  transform: translateX(-50%) translateY(-3px);
+  box-shadow: 0 15px 40px rgba(44, 28, 32, 0.45);
+}
+
+@keyframes hero-scroll-pulse {
+  0%, 100% {
+    box-shadow: 0 10px 30px rgba(178, 63, 84, 0.4);
+    transform: translateX(-50%) translateY(0);
+  }
+  50% {
+    box-shadow: 0 18px 45px rgba(178, 63, 84, 0.7);
+    transform: translateX(-50%) translateY(-2px);
+  }
+}
+
+@media (max-width: 1279px) {
+  .hero__note {
+    display: none;
+  }
+}
+
+@media (max-width: 767px) {
+  .hero {
+    --hero-pad-top: clamp(50px, 8vh, 76px);
+  }
+
+  .hero__stage {
+    width: 148vw;
+    max-width: none;
+    aspect-ratio: auto;
+    height: min(99vw, 64svh);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero__pointer,
+  .hero__cursor,
+  .hero__particles,
+  .hero__particles span,
+  .hero__note,
+  .hero__backdrop,
+  .hero__glow,
+  .hero__title,
+  .hero__title span,
+  .hero__subtitle,
+  .hero__scroll,
+  .hero__scroll::after,
+  .hero[data-state='ready'] .hero__glow,
+  .hero[data-beat='notice'] .hero__glow,
+  .hero[data-beat='wave'] .hero__glow,
+  .hero[data-beat='point'] .hero__scroll {
+    animation: none;
+  }
+
+  .hero__title span {
+    color: #b23f54;
+    background: none;
+    -webkit-text-fill-color: currentColor;
+  }
+
+  .hero__sprite,
+  .hero__bubble,
+  .hero__scroll,
+  .hero__glow {
+    transition: none;
+  }
+
+}

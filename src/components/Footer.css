@@ -1,0 +1,117 @@
+.footer {
+  position: relative;
+  overflow: hidden;
+  padding: 0 var(--gutter) 32px;
+  background:
+    radial-gradient(60% 50% at 50% 100%, rgba(184, 52, 77, 0.3) 0%, transparent 70%),
+    var(--dark);
+  color: rgba(255, 255, 255, 0.72);
+  font-family: var(--font-body);
+}
+
+.footer__inner {
+  max-width: var(--max);
+  margin: 0 auto;
+  padding-top: 56px;
+  border-top: 1px solid var(--line-strong);
+}
+
+.footer__row {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 32px;
+}
+
+.footer__col {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.footer__label {
+  margin-bottom: 8px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.4);
+}
+
+.footer p {
+  margin: 0;
+}
+
+.footer a {
+  color: inherit;
+  text-decoration: none;
+  overflow-wrap: anywhere;
+  transition: color 200ms ease;
+}
+
+.footer a:hover,
+.footer a:focus-visible {
+  color: var(--accent);
+}
+
+/* Name set as a full-width wordmark; size follows the viewport. */
+.footer__wordmark {
+  margin: clamp(56px, 8vw, 112px) 0 clamp(24px, 3vw, 40px);
+  font-family: var(--font-display);
+  font-size: clamp(48px, 11.4vw, 168px);
+  font-weight: 600;
+  line-height: 0.9;
+  letter-spacing: -0.055em;
+  white-space: nowrap;
+  background: linear-gradient(180deg, #fff 0%, #ffc2cb 45%, rgba(194, 58, 85, 0.35) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  transition: letter-spacing 900ms var(--ease-out);
+}
+
+.footer__wordmark:hover {
+  letter-spacing: -0.035em;
+}
+
+.footer__base {
+  display: flex;
+  justify-content: space-between;
+  gap: 24px;
+  padding-top: 20px;
+  border-top: 1px solid var(--dark-line);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.4);
+}
+
+@media (max-width: 900px) {
+  .footer__row {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 560px) {
+  .footer__row {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .footer__wordmark {
+    white-space: normal;
+  }
+
+  .footer__base {
+    flex-direction: column;
+    gap: 8px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .footer a {
+    transition: none;
+  }
+}

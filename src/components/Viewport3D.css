@@ -1,0 +1,203 @@
+/* A modelling-app viewport: dark glass, a thin toolbar, and an axis gizmo. */
+.viewport {
+  --vp-bg: #160b0e;
+  --vp-glow: rgba(178, 63, 84, 0.42);
+  --vp-line: rgba(255, 220, 225, 0.1);
+  --vp-text: rgba(255, 236, 238, 0.72);
+
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  border-radius: 6px;
+  overflow: hidden;
+  background: var(--vp-bg);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.04) inset;
+  font-family: var(--font-body);
+  color: var(--vp-text);
+  isolation: isolate;
+}
+
+.viewport--clay {
+  --vp-bg: #1b1615;
+  --vp-glow: rgba(214, 168, 140, 0.28);
+}
+
+.viewport--wireframe {
+  --vp-bg: #0f0a0c;
+  --vp-glow: rgba(255, 125, 147, 0.2);
+}
+
+.viewport__bar {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 11px 16px;
+  border-bottom: 1px solid var(--vp-line);
+  background: rgba(255, 255, 255, 0.025);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 400;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.viewport__dots {
+  display: inline-flex;
+  gap: 6px;
+}
+
+.viewport__dots i {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.14);
+}
+
+.viewport__dots i:first-child {
+  background: #c93d57;
+}
+
+.viewport__stage {
+  color: #fff;
+}
+
+.viewport__mode {
+  margin-left: auto;
+  font-weight: 500;
+  color: rgba(255, 236, 238, 0.5);
+}
+
+.viewport__mode b {
+  font-weight: 600;
+  color: #ff9fae;
+}
+
+.viewport__screen {
+  position: relative;
+  flex: 1;
+  min-height: 0;
+  background:
+    radial-gradient(55% 50% at 50% 38%, var(--vp-glow) 0%, transparent 72%),
+    linear-gradient(180deg, transparent 60%, rgba(0, 0, 0, 0.35) 100%);
+}
+
+.viewport__canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+  cursor: grab;
+  touch-action: pan-y;
+  opacity: 0;
+  transition: opacity 900ms var(--ease-out);
+}
+
+.viewport[data-status='ready'] .viewport__canvas {
+  opacity: 1;
+}
+
+.viewport[data-dragging] .viewport__canvas {
+  cursor: grabbing;
+}
+
+.viewport__fallback {
+  position: absolute;
+  inset: 8% 0 0;
+  width: 100%;
+  height: 92%;
+  object-fit: contain;
+}
+
+.viewport__loading {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  font-size: 12px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: rgba(255, 236, 238, 0.45);
+  animation: viewport-pulse 1.6s ease-in-out infinite;
+}
+
+@keyframes viewport-pulse {
+  50% {
+    opacity: 0.4;
+  }
+}
+
+.viewport__gizmo {
+  position: absolute;
+  left: 14px;
+  bottom: 12px;
+  width: 44px;
+  height: 44px;
+  pointer-events: none;
+}
+
+.viewport__gizmo text {
+  font-size: 7px;
+  font-weight: 700;
+  fill: rgba(255, 255, 255, 0.55);
+}
+
+.viewport__axis {
+  stroke-width: 2;
+  stroke-linecap: round;
+}
+
+.viewport__axis--x {
+  stroke: #ff6b7f;
+}
+
+.viewport__axis--y {
+  stroke: #9be28f;
+}
+
+.viewport__axis--z {
+  stroke: #7fb2ff;
+}
+
+.viewport__stats,
+.viewport__hint {
+  position: absolute;
+  bottom: 14px;
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  color: rgba(255, 236, 238, 0.45);
+  pointer-events: none;
+}
+
+.viewport__stats {
+  top: 14px;
+  right: 16px;
+  bottom: auto;
+  font-variant-numeric: tabular-nums;
+}
+
+.viewport__hint {
+  right: 16px;
+  transition: opacity 400ms ease;
+}
+
+.viewport:hover .viewport__hint {
+  opacity: 0.2;
+}
+
+@media (pointer: coarse) {
+  .viewport__hint {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .viewport__loading {
+    animation: none;
+  }
+
+  .viewport__canvas {
+    transition: none;
+  }
+}

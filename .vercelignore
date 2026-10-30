@@ -1,0 +1,7 @@
+# Source material and offline render tooling: not needed to build the site.
+Divyansh Tandon Portfolio
+public-hero-video
+scripts
+.claude
+dist
+node_modules

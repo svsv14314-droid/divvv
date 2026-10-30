@@ -1,0 +1,54 @@
+.parallax {
+  position: relative;
+  margin: 0;
+  overflow: hidden;
+  border-radius: 6px;
+  background: var(--night);
+  box-shadow: none;
+  isolation: isolate;
+}
+
+.parallax__fallback,
+.parallax__canvas {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.parallax__fallback {
+  object-fit: cover;
+  /* Matches the shader's overscan so the swap is seamless. */
+  transform: scale(1.06);
+}
+
+.parallax__canvas {
+  opacity: 0;
+  transition: opacity 700ms var(--ease-out);
+}
+
+.parallax[data-ready='true'] .parallax__canvas {
+  opacity: 1;
+}
+
+/* Soft vignette so the caption reads on any part of the photo. */
+.parallax::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(180deg, transparent 55%, rgba(14, 8, 9, 0.72) 100%);
+}
+
+.parallax__caption {
+  position: absolute;
+  left: 22px;
+  right: 22px;
+  bottom: 20px;
+  z-index: 1;
+  font-family: var(--font-body);
+  font-size: 13px;
+  line-height: 1.5;
+  color: rgba(255, 244, 242, 0.88);
+}

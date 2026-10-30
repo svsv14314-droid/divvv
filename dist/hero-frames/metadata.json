@@ -1,0 +1,97 @@
+{
+  "frameCount": 239,
+  "holdFrame": 224,
+  "fps": 24,
+  "duration": 9.958333333333334,
+  "frameWidth": 800,
+  "frameHeight": 450,
+  "sourceWidth": 1920,
+  "sourceHeight": 1080,
+  "framesPerSheet": 20,
+  "sheets": [
+    {
+      "file": "/hero-frames/hero-sprite-0.webp",
+      "startFrame": 0,
+      "frameCount": 20,
+      "width": 16000,
+      "height": 450
+    },
+    {
+      "file": "/hero-frames/hero-sprite-1.webp",
+      "startFrame": 20,
+      "frameCount": 20,
+      "width": 16000,
+      "height": 450
+    },
+    {
+      "file": "/hero-frames/hero-sprite-2.webp",
+      "startFrame": 40,
+      "frameCount": 20,
+      "width": 16000,
+      "height": 450
+    },
+    {
+      "file": "/hero-frames/hero-sprite-3.webp",
+      "startFrame": 60,
+      "frameCount": 20,
+      "width": 16000,
+      "height": 450
+    },
+    {
+      "file": "/hero-frames/hero-sprite-4.webp",
+      "startFrame": 80,
+      "frameCount": 20,
+      "width": 16000,
+      "height": 450
+    },
+    {
+      "file": "/hero-frames/hero-sprite-5.webp",
+      "startFrame": 100,
+      "frameCount": 20,
+      "width": 16000,
+      "height": 450
+    },
+    {
+      "file": "/hero-frames/hero-sprite-6.webp",
+      "startFrame": 120,
+      "frameCount": 20,
+      "width": 16000,
+      "height": 450
+    },
+    {
+      "file": "/hero-frames/hero-sprite-7.webp",
+      "startFrame": 140,
+      "frameCount": 20,
+      "width": 16000,
+      "height": 450
+    },
+    {
+      "file": "/hero-frames/hero-sprite-8.webp",
+      "startFrame": 160,
+      "frameCount": 20,
+      "width": 16000,
+      "height": 450
+    },
+    {
+      "file": "/hero-frames/hero-sprite-9.webp",
+      "startFrame": 180,
+      "frameCount": 20,
+      "width": 16000,
+      "height": 450
+    },
+    {
+      "file": "/hero-frames/hero-sprite-10.webp",
+      "startFrame": 200,
+      "frameCount": 20,
+      "width": 16000,
+      "height": 450
+    },
+    {
+      "file": "/hero-frames/hero-sprite-11.webp",
+      "startFrame": 220,
+      "frameCount": 19,
+      "width": 15200,
+      "height": 450
+    }
+  ]
+}
